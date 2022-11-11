@@ -9,7 +9,7 @@ var usersRouter = require('./routes/users');
 var catalogRouter = require('./routes/catalog')
 
 const compression = require("compression")
-
+const helment = require("helmet")
 var app = express();
 
 // view engine setup
@@ -22,6 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(compression())
+app.use(helmet())
 
 
 app.use('/', indexRouter);
@@ -30,8 +31,8 @@ app.use("/catalog", catalogRouter)
 
 // database 
 const mongoose = require('mongoose');
-const mongoDB = "mongodb+srv://m001-student:m001-mongodb-basics@sandbox.gzlwmkm.mongodb.net/local_library?retryWrites=true&w=majority"
-
+const dev_db_url = "mongodb+srv://m001-student:m001-mongodb-basics@sandbox.gzlwmkm.mongodb.net/local_library?retryWrites=true&w=majority"
+const mongoDB = process.env.MONGODB_URI || dev_db_url
 
 mongoose.connect(mongoDB, {useNewUrlParser:true,
 useUnifiedTopology:true})
