@@ -9,7 +9,7 @@ var usersRouter = require('./routes/users');
 var catalogRouter = require('./routes/catalog')
 
 const compression = require("compression")
-const helment = require("helmet")
+const helmet = require("helmet")
 var app = express();
 
 // view engine setup
