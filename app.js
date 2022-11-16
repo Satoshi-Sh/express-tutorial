@@ -15,6 +15,7 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+require('dotenv').config()
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -31,8 +32,13 @@ app.use("/catalog", catalogRouter)
 
 // database 
 const mongoose = require('mongoose');
-const dev_db_url = "mongodb+srv://m001-student:m001-mongodb-basics@sandbox.gzlwmkm.mongodb.net/local_library?retryWrites=true&w=majority"
-const mongoDB = process.env.MONGODB_URI || dev_db_url
+let mongoDB = ''
+if (process.env.KEY){
+  mongoDB =process.env.KEY
+}
+else {
+  mongoDB = process.env.url
+}
 
 mongoose.connect(mongoDB, {useNewUrlParser:true,
 useUnifiedTopology:true})
